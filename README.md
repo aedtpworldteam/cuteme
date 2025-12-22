@@ -31,4 +31,4 @@ The cute me app is made for everyone...
 Cute Me can also engage children to communication by the nature of appearance edited by Cute..
 
 
-©️AEDTP WORLD
+©️AEDTP WORLD; LOGO TO DISPLAY ; https://aedtpworld.neocities.org/icons/cuteme.ico;  CUTEME APP PAGE https://aedtpworld.neocities.org/apps/cuteme
