@@ -1,34 +1,94 @@
-# cuteme
-CUTEME, The Photogenic App From AEDTP WORLD
-Cute Me Software™️
-New app: Cute Me
-"Cute Me" is a smart photogenic application which has the ability and capability of editing and making changes to images.
-"Cute Me" developed by AEDTP WORLD to enhance the appearance of images.
-Cute Me was an idea on the 25th of August, 2025..
-Emmanuel Deliver Amable has found an idea of creating the "Cute Me"
-when he was in school (College)
-August was a cold weather month..
-And looking at the surroundings, seeing the beautiful aspects of nature, he got the idea for "Cute Me" and he thought again seeing the properties Cute Me would inherit in mind, the most reason he was sure to develop Cute Me was the appearance linking by the females.
+# CUTEME  
+### The Photogenic App by AEDTP WORLD
 
-The Idea of females liking to beautify images made him to surely create "Cute Me"
+![CUTEME Logo](https://aedtpworld.neocities.org/icons/cuteme.ico)
 
-Getting The Cute Me Application:
-By searching "Cute Me AEDTP WORLD", a user is able to download and install the "Cute Me" app for free...
+**Cute Me Software™️**
 
-How To Use "Cute Me" app:
-⦁	Download and Install "Cute Me" app
-⦁	Register if you need to
-⦁	After having access in the app, you can switch to camera, then capture the imagery.. Either in landscape or portrait..
-⦁	You can save before editing or editing during shooting .. You can load or open existing images from device's storage to edit them..
-⦁	After editing the imagery, share with friends and loved once to tell you how they feel about your photos .. They will be able to even try their hands on the "Cute Me" app
+---
 
-CAUTION/ THINGS TO KNOW About "Cute Me" app;
-The "Cute Me" app is made and used for fun..
-A user can use the Cute Me app to create looks and share with others for fun..
-Leisure times are assured using "Cute Me" app
-The cute me app is made for everyone...
+## Overview
 
-Cute Me can also engage children to communication by the nature of appearance edited by Cute..
+**CUTEME** is a smart photogenic application developed by **AEDTP WORLD**.  
+It allows users to capture, edit, enhance, and share images with ease, combining simplicity with creative power.
 
+The app focuses on appearance, creativity, and user-friendly image enhancement for everyday photography and leisure use.
 
-©️AEDTP WORLD; LOGO TO DISPLAY ; https://aedtpworld.neocities.org/icons/cuteme.ico;  CUTEME APP PAGE https://aedtpworld.neocities.org/apps/cuteme
+---
+
+## Vision & Background
+
+The idea for **CUTEME** was conceived on **25 August 2025** by **Emmanuel Deliver Amable** during his college years.
+
+Inspired by the calm atmosphere of August and the beauty of nature, the concept was formed after observing how people—especially females—enjoy beautifying and enhancing images. This appreciation for visual appearance became the foundation of CUTEME.
+
+---
+
+## Key Features
+
+- Camera capture (portrait & landscape)
+- Save images to device storage
+- Edit images during or after capture
+- Open and edit existing images
+- Image effects & enhancements
+- Adjustable quality (Normal, HD, Full HD, optional 4K)
+- Text overlay
+- Image resizing
+- Zoom support
+- Easy sharing
+- Clean and modern interface
+
+---
+
+## Getting CUTEME
+
+Search for:
+
+> **Cute Me AEDTP WORLD**
+
+or visit the official app page:
+
+🔗 https://aedtpworld.neocities.org/apps/cuteme
+
+---
+
+## How to Use
+
+1. Download and install **CUTEME**
+2. Register if required
+3. Open the camera
+4. Capture photos in portrait or landscape
+5. Edit images before or after saving
+6. Open existing images from storage
+7. Apply effects, text, and resizing
+8. Save and share your photos
+
+---
+
+## Usage Notice
+
+- CUTEME is designed for fun and creativity
+- Suitable for all ages
+- Encourages visual expression and leisure use
+- Can engage children through playful image editing
+
+---
+
+## Development & Ownership
+
+- **App Name:** CUTEME  
+- **Developer:** AEDTP WORLD  
+- **Software:** Cute Me Software™️  
+- **Concept:** Emmanuel Deliver Amable  
+
+© AEDTP WORLD. All rights reserved.
+
+---
+
+## Links
+
+- **App Logo:**  
+  https://aedtpworld.neocities.org/icons/cuteme.ico
+
+- **Official App Page:**  
+  https://aedtpworld.neocities.org/apps/cuteme
