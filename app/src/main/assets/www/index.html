@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CUTEME | AEDTP WORLD</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;background:#000;font-family:system-ui,Arial,sans-serif;overflow:hidden;}
+header{background:linear-gradient(135deg,#ff5ca8,#ff8bd1);color:#fff;text-align:center;padding:12px;font-weight:600;}
+video,canvas,img{width:100%;display:block;background:#000;}
+.controls,.toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:8px;}
+button,select{border:none;border-radius:8px;padding:10px 14px;font-size:14px;}
+button{background:#ff5ca8;color:#fff;}
+button.secondary{background:#555;}
+button.danger{background:#c62828;}
+.section{padding:8px;background:#111;color:#fff;}
+#gallery{padding:6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;}
+#editor{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:999;justify-content:center;align-items:center;}
+#editor canvas{max-height:70vh;}
+</style>
+</head>
+<body>
+
+<header>CUTEME</header>
+
+<div class="section">
+  <select id="cameraSelect"></select>
+  <select id="qualitySelect">
+    <option value="normal">Normal</option>
+    <option value="hd">HD 720p</option>
+    <option value="fullhd">Clear HD 1080p</option>
+    <option value="4k">4K (Optional)</option>
+  </select>
+  <button id="start">Start Camera</button>
+</div>
+
+<video id="video" playsinline muted></video>
+
+<div class="controls">
+  <button id="photo" disabled>Capture</button>
+  <button id="record" disabled>Record</button>
+  <button id="stop" class="danger" disabled>Stop</button>
+  <button id="openFile" class="secondary">Open</button>
+</div>
+
+<div id="gallery"></div>
+
+<div id="editor">
+  <canvas id="editCanvas"></canvas>
+  <div class="controls">
+    <button onclick="resetEdit()">Reset</button>
+    <button onclick="rotate()">Rotate</button>
+    <button onclick="flip()">Flip</button>
+    <button onclick="bright()">Bright+</button>
+    <button onclick="cartoon()">Cartoon</button>
+    <button onclick="resizeImg()">Resize</button>
+    <button onclick="addText()">Text</button>
+    <button onclick="saveEdit()">Save</button>
+    <button onclick="closeEditor()" class="danger">Close</button>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept="image/*" hidden>
+
+<script>
+const video=document.getElementById("video"),
+      photoBtn=document.getElementById("photo"),
+      recordBtn=document.getElementById("record"),
+      stopBtn=document.getElementById("stop"),
+      cameraSelect=document.getElementById("cameraSelect"),
+      qualitySelect=document.getElementById("qualitySelect"),
+      gallery=document.getElementById("gallery"),
+      editCanvas=document.getElementById("editCanvas"),
+      ctx=editCanvas.getContext("2d");
+
+let stream, recorder, chunks=[], originalImage=null;
+
+// Start Camera
+async function startCamera(deviceId){
+  if(stream) stream.getTracks().forEach(t=>t.stop());
+  let q=qualitySelect.value, opts={facingMode:"environment"};
+  if(q==="hd"){opts.width={ideal:1280}; opts.height={ideal:720};}
+  if(q==="fullhd"){opts.width={ideal:1920}; opts.height={ideal:1080};}
+  if(q==="4k"){opts.width={ideal:3840}; opts.height={ideal:2160};}
+  if(deviceId) opts.deviceId={exact:deviceId};
+  try{stream=await navigator.mediaDevices.getUserMedia({video:opts,audio:true});}
+  catch{stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});}
+  video.srcObject=stream; await video.play();
+  photoBtn.disabled=false; recordBtn.disabled=!window.MediaRecorder;
+  loadCameras();
+}
+
+// Load Camera List
+async function loadCameras(){
+  const devices=await navigator.mediaDevices.enumerateDevices();
+  cameraSelect.innerHTML="";
+  devices.filter(d=>d.kind==="videoinput").forEach((d,i)=>{
+    const o=document.createElement("option");
+    o.value=d.deviceId; o.text=d.label||"Camera "+(i+1);
+    cameraSelect.appendChild(o);
+  });
+}
+
+document.getElementById("start").onclick=()=>startCamera();
+cameraSelect.onchange=()=>startCamera(cameraSelect.value);
+
+// Capture Photo
+photoBtn.onclick=()=>{
+  const c=document.createElement("canvas");
+  c.width=video.videoWidth; c.height=video.videoHeight;
+  c.getContext("2d").drawImage(video,0,0);
+  addImage(c.toDataURL("image/png"));
+};
+
+// Record Video
+recordBtn.onclick=()=>{
+  chunks=[]; recorder=new MediaRecorder(stream);
+  recorder.ondataavailable=e=>chunks.push(e.data);
+  recorder.onstop=()=>{
+    const blob=new Blob(chunks,{type:"video/webm"});
+    const url=URL.createObjectURL(blob);
+    const v=document.createElement("video");
+    v.src=url; v.controls=true;
+    gallery.prepend(v);
+  };
+  recorder.start(); stopBtn.disabled=false;
+};
+stopBtn.onclick=()=>{recorder.stop(); stopBtn.disabled=true;};
+
+// Open file from device
+document.getElementById("openFile").onclick=()=>fileInput.click();
+fileInput.onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>addImage(r.result);
+  r.readAsDataURL(f);
+};
+
+// Add Image to Gallery
+function addImage(src){
+  const img=document.createElement("img"); img.src=src;
+  img.onclick=()=>openEditor(src);
+  gallery.prepend(img);
+}
+
+// Editor functions
+function openEditor(src){
+  originalImage=new Image();
+  originalImage.onload=()=>{
+    editCanvas.width=originalImage.width;
+    editCanvas.height=originalImage.height;
+    ctx.drawImage(originalImage,0,0);
+    document.getElementById("editor").style.display="flex";
+  };
+  originalImage.src=src;
+}
+function resetEdit(){ctx.clearRect(0,0,editCanvas.width,editCanvas.height); ctx.drawImage(originalImage,0,0);}
+function rotate(){const c=document.createElement("canvas"); c.width=editCanvas.height; c.height=editCanvas.width; const x=c.getContext("2d"); x.translate(c.width/2,c.height/2); x.rotate(Math.PI/2); x.drawImage(editCanvas,-editCanvas.width/2,-editCanvas.height/2); editCanvas.width=c.width; editCanvas.height=c.height; ctx.drawImage(c,0,0);}
+function flip(){ctx.translate(editCanvas.width,0); ctx.scale(-1,1); ctx.drawImage(editCanvas,0,0);}
+function bright(){ctx.globalAlpha=0.15; ctx.fillStyle="#fff"; ctx.fillRect(0,0,editCanvas.width,editCanvas.height); ctx.globalAlpha=1;}
+function cartoon(){ctx.globalCompositeOperation="overlay"; ctx.fillStyle="#ffc0ff"; ctx.fillRect(0,0,editCanvas.width,editCanvas.height); ctx.globalCompositeOperation="source-over";}
+function resizeImg(){let w=prompt("Width",editCanvas.width); if(!w) return; let h=Math.round((w/editCanvas.width)*editCanvas.height); const c=document.createElement("canvas"); c.width=w; c.height=h; c.getContext("2d").drawImage(editCanvas,0,0,w,h); editCanvas.width=w; editCanvas.height=h; ctx.drawImage(c,0,0);}
+function addText(){let t=prompt("Text"); if(!t) return; ctx.font="48px Arial"; ctx.fillStyle="#fff"; ctx.fillText(t,40,80);}
+function saveEdit(){addImage(editCanvas.toDataURL("image/png")); closeEditor();}
+function closeEditor(){document.getElementById("editor").style.display="none";}
+
+// Service Worker registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js')
+    .then(reg=>console.log('SW registered:', reg.scope))
+    .catch(err=>console.log('SW failed:', err));
+}
+</script>
+</body>
+</html>

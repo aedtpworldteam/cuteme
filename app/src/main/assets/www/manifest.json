@@ -1,0 +1,20 @@
+{
+  "name": "CUTEME",
+  "short_name": "CUTEME",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ff5ca8",
+  "icons": [
+    {
+      "src": "/cuteme.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/cuteme.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
